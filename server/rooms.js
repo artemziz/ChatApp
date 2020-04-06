@@ -4,7 +4,6 @@ const rooms = [
         "id":-1,
         "name":'firstRoom',
         "users":[{
-            "id":1,
             "name":2,
         }],
         "messages":[{
@@ -15,11 +14,11 @@ const rooms = [
     }
 ];
 
-const getRooms = (userId) =>{
+const getRooms = (username) =>{
     let userRooms = [];
     rooms.forEach(room =>{
                 
-        if(room.users.includes(room.users.find(user =>user.id ===userId))){
+        if(room.users.includes(room.users.find(user =>user.name ===username))){
                      
             userRooms.push(room);
         }
@@ -31,7 +30,7 @@ const getRooms = (userId) =>{
 const getMessages = (curRoom) =>{
     return rooms.find(room =>room.id == curRoom).messages
 }
-const createRoom =(userId,username) =>{
+const createRoom =(username) =>{
     
     let room = {
         id:roomCounter,
@@ -40,18 +39,18 @@ const createRoom =(userId,username) =>{
         'messages':[]
     }
     rooms.push(room);  
-    addUserToRoom(userId,username,roomCounter);
+    addUserToRoom(username,roomCounter);
     
     return roomCounter++;
     
 }
 
-const addUserToRoom = (userId,username,roomId) =>{
+const addUserToRoom = (username,roomId) =>{
     rooms.forEach(room =>{
                    
         if(room.id==roomId){
+            if(!room.users.includes(room.users.find(user => user.name==username)))
             room.users.push({
-                id:userId,
                 name:username
             })
         }

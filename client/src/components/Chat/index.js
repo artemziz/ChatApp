@@ -14,16 +14,27 @@ export default function Chat({location,socket}){
     
     
     useEffect(()=>{
-        
+        if(sessionStorage.getItem('name')){    
+                socket.emit('setName',sessionStorage.getItem('name'));
+        }
+       
         socket.on('getRooms',({rooms})=>{
             setRooms(rooms);
-            console.log(location);
         })
+        
+        
+        if(querystring.parse(location.search).room!=null){
+            socket.emit('addUserToRoom',querystring.parse(location.search).room);
+        } 
+           
+        
     },[])
     
-    useEffect(()=>{
-        
+    useEffect(()=>{  
         setRoom(rooms.find(r => r.id == querystring.parse(location.search).room));
+        if(room!=null){
+            socket.emit('addUserToRoom',room.id);
+        }
     },[location.search])
     const createRoom = (event) =>{
         event.preventDefault();

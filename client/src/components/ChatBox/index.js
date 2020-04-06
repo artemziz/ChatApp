@@ -11,12 +11,7 @@ export default function ChatBox({messages,room,socket}){
             socket.emit('sendMessage',message,room.id);       
         }
     }
-    useEffect(()=>{
-        if(room!=null){
-            socket.emit('addUserToRoom',room.id);
-        }
-        
-    },[])
+    
     if(room!=null){
         return(
             <article className='ChatBox'>

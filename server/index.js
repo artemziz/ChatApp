@@ -12,47 +12,55 @@ const io = socketio(server);
 app.use(cors());
 
 io.on('connection',(socket) =>{
+    let currentName;
+    socket.on('setName',name =>{
+        currentName = name;
+        
+        socket.emit('getRooms',{rooms:getRooms(currentName)});
+    })
     socket.on('login',( name , callback) =>{
                
-        const {error,user} = addUser({id:socket.id,name:name});
-        
+       const {error,user} = addUser({name:name});
+        if(!error) currentName = name;
+    
        return callback({error,user});
     })
     socket.on('getUser',(callback)=>{
-        const user = getUser(socket.id);      
+        const user = getUser(currentName);      
         callback(user);
 
     })
-    socket.emit('getRooms',{rooms:getRooms(socket.id)});
+    socket.emit('getRooms',{rooms:getRooms(currentName)});
 
     socket.on('createRoom',(callback)=>{
-        const user = getUser(socket.id);
-    
-        
-        const room = createRoom(socket.id,user.name);
+             
+        const room = createRoom(currentName);
         socket.join(room);
-        socket.emit('getRooms',{rooms:getRooms(socket.id)});
+        socket.emit('getRooms',{rooms:getRooms(currentName)});
         
 
     })
     socket.on('getMessages',(roomId,callback)=>{
+        socket.emit('getRooms',{rooms:getRooms(currentName)});
         callback(getMessages(roomId));
 
     });
     socket.on('addUserToRoom',(room) =>{
-        const user = getUser(socket.id);
-        addUserToRoom(socket.id,user.name,room);
+        console.log(room);
+        console.log(currentName);
+        
+        addUserToRoom(currentName,room);
         socket.join(room);
-        socket.broadcast.to(room).emit('message',{
+        socket.broadcast.to(room).emit('getMessages',{
             data:new Date(),
             author:'admin',
-            content:`${user.name} присоединился к чату`
+            content:`${currentName} присоединился к чату`
         })
     })
     socket.on('sendMessage',(message,room)=>{
         
-        addMessage(getUser(socket.id),room,message);
-        socket.emit('getRooms',{rooms:getRooms(socket.id)});
+        addMessage(getUser(currentName),room,message);
+        socket.emit('getRooms',{rooms:getRooms(currentName)});
 
     })
     socket.on('disconnect', () => {
