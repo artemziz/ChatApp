@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import { Link,Redirect } from "react-router-dom";
 import Rooms from '../Rooms';
 import ChatBox from '../ChatBox';
-
+import querystring from 'query-string';
 
 export default function Chat({location,socket}){
     
@@ -12,28 +12,23 @@ export default function Chat({location,socket}){
     const[rooms,setRooms] = useState([]);
     const[redirected,setRedirected] = useState(false);
     
-    const loadRooms = () =>{
-        socket.emit('getRooms',(rooms)=>{
+    
+    useEffect(()=>{
+        
+        socket.on('getRooms',({rooms})=>{
             setRooms(rooms);
-        })
-    }
-    useEffect(()=>{
-        console.log(location);
-        loadRooms();
-        
-    },[location.search])
-
-    useEffect(()=>{
-        
-        socket.emit('getUser',(user) =>{
-            setName(user.name);
+            console.log(location);
         })
     },[])
+    useEffect(()=>{
+        
+        setRoom(querystring.parse(location.search).room);
+    },[location.search])
     const createRoom = (event) =>{
         event.preventDefault();
         socket.emit('createRoom',({ error,room })=>{
             if(error) alert(error);
-            if(room) loadRooms();
+            
         })
     }
     

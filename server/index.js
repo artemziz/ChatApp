@@ -24,21 +24,16 @@ io.on('connection',(socket) =>{
         callback(user);
 
     })
-    socket.on('getRooms',(callback)=>{
-        const rooms = getRooms(socket.id);
-        callback(rooms);
-    })
+    socket.emit('getRooms',{rooms:getRooms(socket.id)});
+
     socket.on('createRoom',(callback)=>{
         const user = getUser(socket.id);
                 
-        const {error,room} = createRoom(socket.id,user.name);
+        createRoom(socket.id,user.name);
         
+        socket.emit('getRooms',{rooms:getRooms(socket.id)});
         
-        
-        
-        
-        
-        return callback({error,room});
+
     })
     socket.on('disconnect', () => {
         const user = removeUser(socket.id);

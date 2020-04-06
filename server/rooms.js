@@ -21,10 +21,7 @@ const getRooms = (userId) =>{
                 
         if(room.users.includes(room.users.find(user =>user.id ===userId))){
                      
-            userRooms.push({
-                id:room.id,
-                name:room.name
-            });
+            userRooms.push(room);
         }
     })
     
@@ -33,23 +30,31 @@ const getRooms = (userId) =>{
 }
 
 const createRoom =(userId,username) =>{
-      
-    if(!userId||!username) return {error:"Некорректные данные"};
+    
     let room = {
         id:roomCounter,
         name:`${roomCounter} room`,
-        users:[{
-            id:userId,
-            name:username
-        }],
+        users:[],
         'messanges':[]
     }
+    rooms.push(room);  
+    addUserToRoom(userId,username,roomCounter);
     roomCounter++;
-    rooms.push(room);
     
-    
-    return {room};
     
 }
 
-module.exports = {getRooms,createRoom};
+const addUserToRoom = (userId,username,roomId) =>{
+    rooms.forEach(room =>{
+                   
+        if(room.id==roomId){
+            room.users.push({
+                id:userId,
+                name:username
+            })
+        }
+    })
+
+}
+
+module.exports = {getRooms,createRoom,addUserToRoom};
