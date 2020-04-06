@@ -11,10 +11,12 @@ export default function Login({socket}){
 
     const handleSubmit = (event) =>{
         event.preventDefault();       
-        socket.emit('login',name,(error) => {
+        socket.emit('login',name,({error,user}) => {
             if(error) {
               alert(error);
             }else{
+                sessionStorage.setItem('name',user.name);
+                
                 setIsLogin(true);
             }
         });

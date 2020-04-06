@@ -7,7 +7,7 @@ const rooms = [
             "id":1,
             "name":2,
         }],
-        "messanges":[{
+        "messages":[{
             data:new Date(),
             author:'qwe',
             content:'qwe'
@@ -28,19 +28,21 @@ const getRooms = (userId) =>{
     
     return userRooms;
 }
-
+const getMessages = (curRoom) =>{
+    return rooms.find(room =>room.id == curRoom).messages
+}
 const createRoom =(userId,username) =>{
     
     let room = {
         id:roomCounter,
         name:`${roomCounter} room`,
         users:[],
-        'messanges':[]
+        'messages':[]
     }
     rooms.push(room);  
     addUserToRoom(userId,username,roomCounter);
-    roomCounter++;
     
+    return roomCounter++;
     
 }
 
@@ -56,5 +58,19 @@ const addUserToRoom = (userId,username,roomId) =>{
     })
 
 }
+const addMessage = (username,roomId,message) =>{
+    rooms.forEach(room =>{
+        if(room.id ==roomId){
+            room.messages.push({
+                data:new Date(),
+                author:username,
+                content:message
+            })
+            
+        }
+    })
+    
+    
+}
 
-module.exports = {getRooms,createRoom,addUserToRoom};
+module.exports = {getRooms,createRoom,addUserToRoom,getMessages,addMessage};

@@ -20,9 +20,10 @@ export default function Chat({location,socket}){
             console.log(location);
         })
     },[])
+    
     useEffect(()=>{
         
-        setRoom(querystring.parse(location.search).room);
+        setRoom(rooms.find(r => r.id == querystring.parse(location.search).room));
     },[location.search])
     const createRoom = (event) =>{
         event.preventDefault();
@@ -36,7 +37,7 @@ export default function Chat({location,socket}){
             <main>
                 <div className='container'>
                     <Rooms rooms={rooms} createRoom={createRoom} socket={socket}/>
-                    <ChatBox room={room}/>
+                    <ChatBox room={room} messages={room ==null? null : room.messages} socket={socket}/>
                 </div>
                 
             </main>
