@@ -18,14 +18,15 @@ export default function Chat({location,socket}){
                 socket.emit('setName',sessionStorage.getItem('name'));
         }
        
+    
+        if(querystring.parse(location.search).room!=null){
+            console.log('yes');
+            
+            socket.emit('addUserToRoom',querystring.parse(location.search).room);
+        } 
         socket.on('getRooms',({rooms})=>{
             setRooms(rooms);
         })
-        
-        
-        if(querystring.parse(location.search).room!=null){
-            socket.emit('addUserToRoom',querystring.parse(location.search).room);
-        } 
            
         
     },[])
@@ -48,7 +49,7 @@ export default function Chat({location,socket}){
             <main>
                 <div className='container'>
                     <Rooms rooms={rooms} createRoom={createRoom} socket={socket}/>
-                    <ChatBox room={room} messages={room ==null? null : room.messages} socket={socket}/>
+                    <ChatBox location={location} room={room} socket={socket}/>
                 </div>
                 
             </main>

@@ -20,7 +20,10 @@ const getRooms = (username) =>{
                 
         if(room.users.includes(room.users.find(user =>user.name ===username))){
                      
-            userRooms.push(room);
+            userRooms.push({
+                id:room.id,
+                name:room.name
+            });
         }
     })
     

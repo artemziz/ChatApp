@@ -41,10 +41,11 @@ io.on('connection',(socket) =>{
 
     })
     socket.on('getMessages',(roomId,callback)=>{
-        socket.emit('getRooms',{rooms:getRooms(currentName)});
+        
         callback(getMessages(roomId));
 
     });
+    
     socket.on('addUserToRoom',(room) =>{
         console.log(room);
         console.log(currentName);
@@ -61,6 +62,7 @@ io.on('connection',(socket) =>{
         
         addMessage(getUser(currentName),room,message);
         socket.emit('getRooms',{rooms:getRooms(currentName)});
+        socket.emit('')
 
     })
     socket.on('disconnect', () => {
