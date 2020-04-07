@@ -1,0 +1,19 @@
+.Header{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Header-logo{
+    margin-left: 20px;
+    width: 64px;
+    height: 64px;
+}
+.Header-logo img{
+    width: 100%;
+    height: 100%;
+}
+.Header-content{
+    display: flex;
+    align-items: center;
+}

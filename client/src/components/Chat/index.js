@@ -49,13 +49,15 @@ export default function Chat({location,socket}){
     }
     
         return(
-            <main>
-                <div className='container'>
-                    <Rooms rooms={rooms} createRoom={createRoom} socket={socket}/>
-                    <ChatBox location={location} room={room} socket={socket}/>
-                </div>
-                
-            </main>
+            
+                <main className='Chat'>
+                    
+                        <Rooms rooms={rooms} createRoom={createRoom} socket={socket}/>
+                        <ChatBox location={location} room={room} socket={socket}/>
+                    
+                    
+                </main>
+            
         )
 }
             

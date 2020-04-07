@@ -1,0 +1,48 @@
+.message{
+    border: 1px solid black;
+    border-radius: 5%;
+    padding:5px;
+    width: fit-content;
+    margin: 10px 0 0 15px;
+}
+.MessageBox{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    overflow-y: auto;
+    width: 100%;
+    margin: 1%;
+}
+.ChatBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex:1.5;
+    padding:20px;
+}
+.message-title{
+    display: flex;
+    justify-content: space-between;
+}
+.message-date{
+    margin-left: 10px;
+}
+.message-input textarea{
+    padding:1rem 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    text-align: center;
+    width: 100%;
+}
+.message-input{
+    width: 100%;
+}
+.ourMessage{
+    align-self: flex-end;
+}
+.messageContainer{
+    display: flex;
+    flex-direction: column;
+}

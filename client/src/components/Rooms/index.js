@@ -8,26 +8,34 @@ export default function Rooms({rooms,createRoom,socket}){
     
     return(
         
-            <article className='rooms'>
-                <div className='container'>
-                    <ul>
-                        {rooms.map(room =>{
-                            return(
-                                <Link key={room.id} to={`/chat?room=${room.id}`}>
+            <article className='Rooms'>
+           
+                <div className='Rooms-Title'>
+                    <h3>Комнаты</h3>
+                </div>                
+                <ul className='RoomList'>
+                    {rooms.map(room =>{
+                        return(
+                            <Link key={room.id} to={`/chat?room=${room.id}`}>
+                                <div className='Room'>
                                     <li key={room.id}>
                                         {room.name}
                                     </li>
-                                </Link>
-                                
-                            )
-                        })}
-                        <li>
-                            <button onClick={createRoom}>
+                                </div>
+                                        
+                            </Link>
+                                    
+                        )
+                    })}       
+                </ul>
+                <div className='Room'>
+                        
+                            <button className='Room-btn' onClick={createRoom}>
                                 Создать комнату
                             </button>
-                        </li>
-                    </ul>
+                        
                 </div>
+            
             </article>
             
         

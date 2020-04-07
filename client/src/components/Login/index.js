@@ -24,20 +24,22 @@ export default function Login({socket}){
     }
     if(!isLogin){
         return(
-            <form onSubmit={handleSubmit} className="Login">
-                <div className='container'>
-                    <div className='Login-header'>
-                        <h1>Войти</h1>
-                    </div>
-                    <div className='Login-name'>
-                        <input placeholder="Введите ваше имя..."  type="text" onChange={(event) => setName(event.target.value)} />
-                    </div>
-                    <div className='Login-submit'>
-                        <input type="submit" value="Отправить" />
-                    </div>
+            <div className='container'>
+                <form onSubmit={handleSubmit} className="Login">
+                    
+                        <div className='Login-header'>
+                            <h1>Войти</h1>
+                        </div>
+                        <div className='Login-name'>
+                            <input placeholder="Введите ваше имя..."  type="text" onChange={(event) => setName(event.target.value)} />
+                        </div>
+                        <div className='Login-submit'>
+                            <input type="submit" value="Отправить" />
+                        </div>
 
-                </div>
-            </form>
+                    
+                </form>
+            </div>
         )
     }else{
         return(

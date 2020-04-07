@@ -1,0 +1,38 @@
+.Login{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 16px #ccc;
+    padding: 50px;
+    letter-spacing: 1px;
+    width: fit-content;
+    margin: 0 auto;
+}
+.Login-header{
+    text-align: center;
+    font-weight: normal;
+}
+
+.Login-name input{
+    border: none; 
+    border-bottom: 1px solid #e0e0e0;
+    padding: 5px;
+    outline: none;
+}
+.Login-submit input{
+    width: 100%;
+    padding: 10px 20px;
+    margin-top: 12px ;
+    border: none; 
+    border-radius: 5px; 
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 16xp;
+    color :#fff ;
+    background-color: #0071f0; 
+    outline: none; 
+    cursor: pointer; 
+    transition: 0.3s; 
+}
