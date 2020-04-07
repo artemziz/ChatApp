@@ -31,7 +31,13 @@ const getRooms = (username) =>{
     return userRooms;
 }
 const getMessages = (curRoom) =>{
-    return rooms.find(room =>room.id == curRoom).messages
+    let room = rooms.find(room =>room.id == curRoom);
+    if(room){
+        return room.messages;
+    } else{
+        return [];
+    }
+    
 }
 const createRoom =(username) =>{
     
@@ -49,16 +55,20 @@ const createRoom =(username) =>{
 }
 
 const addUserToRoom = (username,roomId) =>{
+    let isFound = false;
     rooms.forEach(room =>{
                    
         if(room.id==roomId){
-            if(!room.users.includes(room.users.find(user => user.name==username)))
-            room.users.push({
-                name:username
-            })
+            if(!room.users.includes(room.users.find(user => user.name==username))){
+                room.users.push({
+                    name:username
+                })
+                isFound = true;
+            }
+            
         }
     })
-
+    return isFound;
 }
 const addMessage = (username,roomId,message) =>{
     rooms.forEach(room =>{

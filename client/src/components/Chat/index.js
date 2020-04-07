@@ -7,27 +7,30 @@ import querystring from 'query-string';
 
 export default function Chat({location,socket}){
     
-    const[name,setName] = useState('');
+    
     const[room,setRoom] = useState(null);
     const[rooms,setRooms] = useState([]);
-    const[redirected,setRedirected] = useState(false);
+    
     
     
     useEffect(()=>{
         if(sessionStorage.getItem('name')){    
                 socket.emit('setName',sessionStorage.getItem('name'));
         }
-       
-    
-        if(querystring.parse(location.search).room!=null){
-            console.log('yes');
             
+        if(querystring.parse(location.search).room){
             socket.emit('addUserToRoom',querystring.parse(location.search).room);
-        } 
+            
+        }
+
         socket.on('getRooms',({rooms})=>{
             setRooms(rooms);
+            if(querystring.parse(location.search).room){
+                setRoom(rooms.find(r => r.id == querystring.parse(location.search).room));
+                
+            }
         })
-           
+        
         
     },[])
     

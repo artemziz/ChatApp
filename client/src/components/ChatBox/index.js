@@ -9,19 +9,21 @@ export default function ChatBox({location,room,socket}){
         if(event.key==='Enter'){
             socket.emit('sendMessage',message,room.id);  
             setMessage('');
-            socket.emit('getMessages',room.id,(curMessages =>{
-                setMessages(curMessages);
-            }));
         }
         
     }
     useEffect(()=>{
+        socket.on('getMessages',({messages})=>{
+            console.log(messages);
+            setMessages(messages);
+            
+        })
+    },[])
+    useEffect(()=>{
         setMessage('');
         if(room!=null){
+            socket.emit('setRoom',room.id);
             
-            socket.emit('getMessages',room.id,(curMessages =>{
-                setMessages(curMessages);
-            }));
         }
         
     },[room])
