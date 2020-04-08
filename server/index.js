@@ -12,23 +12,23 @@ const io = socketio(server);
 app.use(cors());
 
 io.on('connection',(socket) =>{
-    const deleteUser =() =>{
+    let currentName;
+    let currentRoom;
+    function deleteUser(){
         deleteUserFromRoom(currentName);
         removeUser(currentName);
     }
-    let currentName;
-    let currentRoom;
-    const out = ()=>{
-        deleteUser();
+    
+    function broadcastMessage(message){
         let messages = getMessages(currentRoom);
             messages? messages.push({
                 data:new Date(),
                 author:'admin',
-                content:`${currentName} покинул чат`
+                content:message
             }): messages = [{
                 data:new Date(),
                 author:'admin',
-                content:`${currentName} покинул чат`
+                content:message
             }];
     
             socket.broadcast.to(currentRoom).emit('getMessages',{messages:messages});
@@ -36,9 +36,12 @@ io.on('connection',(socket) =>{
             socket.emit('getMessages',{messages:getMessages(currentRoom)});
             socket.emit('getUsers',{users:getUsers(currentRoom)});
             socket.broadcast.to(currentRoom).emit('getUsers',{users:getUsers(currentRoom)});
-
-
+    }
+    function out(){
+        deleteUser();
+        broadcastMessage(`${currentName} покинул чат`);
     };
+    
     const outTimer = {
         handle:0,
         start:()=>{
@@ -95,22 +98,8 @@ io.on('connection',(socket) =>{
         
         if(answer){
             socket.join(currentRoom);
-            let messages = getMessages(currentRoom);
-            messages? messages.push({
-                data:new Date(),
-                author:'admin',
-                content:`${currentName} присоединился к чату`
-            }): messages = [{
-                data:new Date(),
-                author:'admin',
-                content:`${currentName} присоединился к чату`
-            }];
-    
-            socket.broadcast.to(room).emit('getMessages',{messages:messages});
-            socket.emit('getRooms',{rooms:getRooms(currentName)});
-            socket.emit('getMessages',{messages:getMessages(currentRoom)});
-            socket.emit('getUsers',{users:getUsers(currentRoom)});
-            socket.broadcast.to(room).emit('getUsers',{users:getUsers(currentRoom)});
+            broadcastMessage(`${currentName} присоединился к чату`);
+            
         }
         
     })

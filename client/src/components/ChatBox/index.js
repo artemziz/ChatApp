@@ -1,12 +1,11 @@
 import React,{useState,useEffect} from 'react';
-import io from "socket.io-client";
-import { Link,Redirect } from "react-router-dom";
+
 import ScrollToBottom from 'react-scroll-to-bottom';
 import Message from '../Message';
 import Users from '../Users';
 
 
-export default function ChatBox({location,room,socket}){
+export default function ChatBox({room,socket}){
     const[message,setMessage] = useState('');
     const[messages,setMessages] = useState([]);
     const[curUsers,setUsers] = useState([]);

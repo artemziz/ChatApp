@@ -1,9 +1,9 @@
-import React,{useState,useEffect} from 'react';
-import io from "socket.io-client";
-import { Link,Redirect } from "react-router-dom";
+import React from 'react';
+
+import { Link } from "react-router-dom";
 import image from './11-512.webp';
 
-export default function Rooms({rooms,createRoom,socket}){
+export default function Rooms({rooms,createRoom}){
     
     
     return(

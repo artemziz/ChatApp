@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 
 const getFormatDate = (date) =>{
     let time = new Date(Date.parse(date));   

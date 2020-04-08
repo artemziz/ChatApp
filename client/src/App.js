@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 const ENDPOINT = 'http://localhost:5000';
 export default function App(){
-    const[socket,setSocket] = useState(io(ENDPOINT));
+    const socket = io(ENDPOINT);
 
     const PrivateRoute = ({ component:Component,...rest}) =>{
         return(
