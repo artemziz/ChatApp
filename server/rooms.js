@@ -39,6 +39,14 @@ const getMessages = (curRoom) =>{
     }
     
 }
+const getUsers = (curRoom) =>{
+    let room = rooms.find(room =>room.id == curRoom); 
+    if(room){
+        return room.users;
+    }else{
+        return [];
+    }
+}
 const createRoom =(username) =>{
     
     let room = {
@@ -85,4 +93,4 @@ const addMessage = (username,roomId,message) =>{
     
 }
 
-module.exports = {getRooms,createRoom,addUserToRoom,getMessages,addMessage};
+module.exports = {getRooms,createRoom,addUserToRoom,getMessages,addMessage,getUsers};

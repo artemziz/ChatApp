@@ -2,11 +2,15 @@ import React,{useState,useEffect} from 'react';
 import io from "socket.io-client";
 import { Link,Redirect } from "react-router-dom";
 import ScrollToBottom from 'react-scroll-to-bottom';
+import Message from '../Message';
+import Users from '../Users';
 
 
 export default function ChatBox({location,room,socket}){
     const[message,setMessage] = useState('');
     const[messages,setMessages] = useState([]);
+    const[curUsers,setUsers] = useState([]);
+    const[showUsers,setShowUsers] = useState(false);
     const sendMessage = (event) =>{
         if(event.key==='Enter'){
             socket.emit('sendMessage',message,room.id);  
@@ -14,17 +18,29 @@ export default function ChatBox({location,room,socket}){
         }
         
     }
-    const getFormatDate = (date) =>{
-        let time = new Date(Date.parse(date));
-        return time.getHours() + ':' + time.getMinutes();
+    const OnshowUsers =(event) =>{
+        event.preventDefault();
+        setShowUsers(true);
+
     }
+    const CloseUsers = (event)=>{
+        event.preventDefault();
+        setShowUsers(false);
+    }
+    const UsersPanel = showUsers?<Users CloseUsers={CloseUsers} users={curUsers}/>:null;
     useEffect(()=>{
         socket.on('getMessages',({messages})=>{
-            console.log(messages);
+            
             setMessages(messages);
             
         })
+        socket.on('getUsers',({users})=>{
+            console.log(users);
+            
+            setUsers(users);
+        })
     },[])
+    
     useEffect(()=>{
         setMessage('');
         if(room!=null){
@@ -35,50 +51,26 @@ export default function ChatBox({location,room,socket}){
     },[room])
     if(room!=null){
         return(
+            
             <article className='ChatBox'>
-                <div className='title'>
-                    <h3>{room.name}</h3>
-                </div>
+                {UsersPanel}
+                <header className='ChatBox-header'>
+                    <div className='title'>
+                        <h3>{room.name}</h3>
+                    </div>
+                    <div className='ChatBox-users'>
+                        <a className='Users-btn' onClick={OnshowUsers}>{curUsers.length} в сети</a>
+                    </div>
+                </header>
+                
                 <ScrollToBottom className='MessageBox'>
                     {messages.map(msg =>{
-                        if(msg.author.name == sessionStorage.getItem('name')){
+                        
                             return(
-                            <div className='messageContainer' key={msg.data} >
-                                <div className='message ourMessage'>
-                                    <div className='message-title'>
-                                        <div className='message-author'>
-                                            {msg.author.name}
-                                        </div>
-                                        <div className='message-date'>
-                                            {getFormatDate(msg.data)}
-                                        </div>
-                                    </div>
-                                    <div className='message-content'>
-                                        <a>{msg.content}</a>
-                                    </div>    
-                                </div>
-                            </div>
+                            <Message msg={msg}/>
                                 
                         )
-                        }else{
-                            return(
-                                <div className='messageContainer' key={msg.data}>
-                                    <div  className='message'>
-                                        <div className='message-title'>
-                                            <div className='message-author'>
-                                                {msg.author.name}
-                                            </div>
-                                            <div className='message-date'>
-                                                {getFormatDate(msg.data)}
-                                            </div>
-                                        </div>
-                                        <div className='message-content'>
-                                            <a>{msg.content}</a>
-                                        </div>    
-                                    </div>
-                                </div>
-                            )
-                        }
+                        
                         
                     })}
                 </ScrollToBottom>

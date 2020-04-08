@@ -4,7 +4,7 @@ const socketio = require('socket.io');
 const cors = require('cors');
 
 const {addUser,removeUser,getUser} = require('./users');
-const {getRooms,createRoom,addUserToRoom,getMessages,addMessage} = require('./rooms');
+const {getRooms,createRoom,addUserToRoom,getMessages,addMessage,getUsers} = require('./rooms');
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
@@ -23,6 +23,7 @@ io.on('connection',(socket) =>{
         currentRoom = room;
         socket.join(currentRoom);
         socket.emit('getMessages',{messages:getMessages(currentRoom)});
+        socket.emit('getUsers',{users:getUsers(currentRoom)});
     })
     socket.on('login',( name , callback) =>{
                
@@ -47,7 +48,7 @@ io.on('connection',(socket) =>{
 
     })
     socket.emit('getMessages',{messages:getMessages(currentRoom)});
-    
+    socket.emit('getUsers',{users:getUsers(currentRoom)});
     socket.on('addUserToRoom',(room) =>{
         console.log(room);
         console.log(currentName);
@@ -69,9 +70,10 @@ io.on('connection',(socket) =>{
             }];
     
             socket.broadcast.to(room).emit('getMessages',{messages:messages});
-    
             socket.emit('getRooms',{rooms:getRooms(currentName)});
             socket.emit('getMessages',{messages:getMessages(currentRoom)});
+            socket.emit('getUsers',{users:getUsers(currentRoom)});
+            socket.broadcast.to(room).emit('getUsers',{users:getUsers(currentRoom)});
         }
         
     })

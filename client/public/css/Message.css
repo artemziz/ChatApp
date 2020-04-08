@@ -1,0 +1,36 @@
+.message{
+    box-shadow: 0 4px 16px #ccc;
+    padding:15px;
+    border-radius: 5px;
+    width: fit-content;
+    margin: 10px 0 0 15px;
+}
+.message-title{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+.message-date{
+    margin-left: 10px;
+}
+.message-input textarea{
+    padding:1rem 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    text-align: center;
+    width: 100%;
+    font-size: large;
+}
+.message-input{
+    width: 90%;
+    margin-top: 15px;
+    
+}
+.ourMessage{
+    align-self: flex-end;
+    background-color: #0071f0;
+    color:white;
+}
+.message-content a{
+    line-height: 1.7;
+}

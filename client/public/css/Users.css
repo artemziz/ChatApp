@@ -1,0 +1,60 @@
+.Users-btn{
+    cursor: pointer;
+}
+.Users{
+    z-index: 1000;
+    background-color: white;
+    
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding:1rem 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 5%;
+}
+.close-icon{
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+}
+.close-icon img{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.Users-list{
+    
+    flex:1;
+    
+    overflow-y: scroll;
+}
+.Users-list li{
+    list-style-type: none;
+    
+}
+.Users-title{
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+.User{
+    margin-bottom: 10px;
+    padding:1rem 0.5rem;
+    width: 70%;
+}
+.Users-background{
+    background-color: rgba(0,0,0,0.5);
+    
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    z-index:999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

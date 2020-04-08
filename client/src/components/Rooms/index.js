@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import io from "socket.io-client";
 import { Link,Redirect } from "react-router-dom";
-
+import image from './11-512.webp';
 
 export default function Rooms({rooms,createRoom,socket}){
     
@@ -18,6 +18,9 @@ export default function Rooms({rooms,createRoom,socket}){
                         return(
                             <Link key={room.id} to={`/chat?room=${room.id}`}>
                                 <div className='Room'>
+                                    <div className='Room-icon'>
+                                        <img src={image}/>
+                                    </div>
                                     <li key={room.id}>
                                         {room.name}
                                     </li>
@@ -28,9 +31,9 @@ export default function Rooms({rooms,createRoom,socket}){
                         )
                     })}       
                 </ul>
-                <div className='Room'>
+                <div className='CreateRoom'>
                         
-                            <button className='Room-btn' onClick={createRoom}>
+                            <button className='CreateRoom-btn' onClick={createRoom}>
                                 Создать комнату
                             </button>
                         
