@@ -2,13 +2,12 @@ import React,{useState,useEffect} from 'react';
 import io from "socket.io-client";
 import { Link,Redirect } from "react-router-dom";
 
-export default function Login({socket}){
+export default function Login({location,socket}){
     
     const[isLogin,setIsLogin] = useState(false);
     const [name, setName] = useState('');
 
-    
-
+    const { from } = location.state || { from: { pathname: '/chat' } };
     const handleSubmit = (event) =>{
         event.preventDefault();       
         socket.emit('login',name,({error,user}) => {
@@ -43,7 +42,7 @@ export default function Login({socket}){
         )
     }else{
         return(
-            <Redirect to='/chat'/>
+            <Redirect to={from}/>
         )
     }
     
