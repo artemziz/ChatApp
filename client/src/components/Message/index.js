@@ -1,8 +1,16 @@
 import React,{useState,useEffect} from 'react';
 
 const getFormatDate = (date) =>{
-    let time = new Date(Date.parse(date));
-    return time.getHours() + ':' + time.getMinutes();
+    let time = new Date(Date.parse(date));   
+    
+    let hours = (time.getHours().toString()).length == 2
+                    ?time.getHours()
+                    :'0'+ time.getHours()
+    let minutes = (time.getMinutes().toString()).length == 2
+                    ?time.getMinutes()
+                    :'0'+ time.getMinutes()
+    
+    return hours +':' + minutes
 }
 export default function Message({msg}){
     

@@ -4,7 +4,7 @@ const socketio = require('socket.io');
 const cors = require('cors');
 
 const {addUser,removeUser,getUser} = require('./users');
-const {getRooms,createRoom,addUserToRoom,getMessages,addMessage,getUsers} = require('./rooms');
+const {getRooms,createRoom,addUserToRoom,getMessages,addMessage,getUsers,deleteUserFromRoom} = require('./rooms');
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
@@ -12,9 +12,46 @@ const io = socketio(server);
 app.use(cors());
 
 io.on('connection',(socket) =>{
+    const deleteUser =() =>{
+        deleteUserFromRoom(currentName);
+        removeUser(currentName);
+    }
     let currentName;
     let currentRoom;
+    const out = ()=>{
+        deleteUser();
+        let messages = getMessages(currentRoom);
+            messages? messages.push({
+                data:new Date(),
+                author:'admin',
+                content:`${currentName} покинул чат`
+            }): messages = [{
+                data:new Date(),
+                author:'admin',
+                content:`${currentName} покинул чат`
+            }];
+    
+            socket.broadcast.to(currentRoom).emit('getMessages',{messages:messages});
+            socket.emit('getRooms',{rooms:getRooms(currentName)});
+            socket.emit('getMessages',{messages:getMessages(currentRoom)});
+            socket.emit('getUsers',{users:getUsers(currentRoom)});
+            socket.broadcast.to(currentRoom).emit('getUsers',{users:getUsers(currentRoom)});
+
+
+    };
+    const outTimer = {
+        handle:0,
+        start:()=>{
+            
+            this.handle = setTimeout(out,10000);
+        },
+        stop:()=>{
+            clearTimeout(this.handle);
+            this.handle = 0;
+        }
+    }
     socket.on('setName',name =>{
+        outTimer.stop();
         currentName = name;
         
         socket.emit('getRooms',{rooms:getRooms(currentName)});
@@ -86,7 +123,7 @@ io.on('connection',(socket) =>{
 
     })
     socket.on('disconnect', () => {
-        //const user = removeUser(socket.id);
+        outTimer.start();
     })
 })
 

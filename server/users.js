@@ -20,9 +20,8 @@ const addUser = ({name}) =>{
 
 const removeUser = (name) => {
     const index = users.findIndex((user) => user.name === name);
-    console.log(index);
     
-    if(index !== -1) return users.splice(index, 1)[0];
+    if(index !== -1) users.splice(index, 1);
 }
 
 const getUser = (name) => users.find((user) => user.name === name);

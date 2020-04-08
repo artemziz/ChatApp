@@ -93,4 +93,13 @@ const addMessage = (username,roomId,message) =>{
     
 }
 
-module.exports = {getRooms,createRoom,addUserToRoom,getMessages,addMessage,getUsers};
+const deleteUserFromRoom = (username) =>{
+    rooms.forEach(room =>{
+        let user = room.users.findIndex(user =>user.name == username);
+        if(user!==-1){
+            room.users.splice(user,1);
+        }
+    })
+}
+
+module.exports = {getRooms,createRoom,addUserToRoom,getMessages,addMessage,getUsers,deleteUserFromRoom};
