@@ -10,7 +10,7 @@ export default function Users({CloseUsers,users}){
                     <div className='Users-title title'>
                         <h3>Пользователи</h3>
                         <div className='close-icon'>
-                            <img onClick={CloseUsers} src={image}/>
+                            <img onClick={CloseUsers} alt='close' src={image}/>
                         </div>
                     </div>
                     <ul className='Users-list'>

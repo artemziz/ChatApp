@@ -21,15 +21,11 @@ io.on('connection',(socket) =>{
     
     function broadcastMessage(message){
         let messages = getMessages(currentRoom);
-            messages? messages.push({
+            messages.push({
                 data:new Date(),
                 author:'admin',
                 content:message
-            }): messages = [{
-                data:new Date(),
-                author:'admin',
-                content:message
-            }];
+            });
     
             socket.broadcast.to(currentRoom).emit('getMessages',{messages:messages});
             socket.emit('getRooms',{rooms:getRooms(currentName)});

@@ -19,7 +19,7 @@ export default function Rooms({rooms,createRoom}){
                             <Link key={room.id} to={`/chat?room=${room.id}`}>
                                 <div className='Room'>
                                     <div className='Room-icon'>
-                                        <img src={image}/>
+                                        <img alt='room icon' src={image}/>
                                     </div>
                                     <li key={room.id}>
                                         {room.name}

@@ -66,7 +66,7 @@ export default function ChatBox({room,socket}){
                     {messages.map(msg =>{
                         
                             return(
-                            <Message msg={msg}/>
+                            <Message key={msg.data} msg={msg}/>
                                 
                         )
                         
